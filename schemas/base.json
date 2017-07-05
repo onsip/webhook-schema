@@ -1,0 +1,16 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "title": "base",
+  "Description": "This is the base event schema, specifying the minimum field requirements",
+
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "streamId": { "type": "string" },
+    "subscriptionId": { "type": "string" },
+    "type": { "type": "string" },
+    "createdAt": { "type": "string", "format": "date-time" }
+  },
+  "required": ["id", "streamId", "type", "payload", "subscriptionId", "createdAt"]
+}
+

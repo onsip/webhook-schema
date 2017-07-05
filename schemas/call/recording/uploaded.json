@@ -1,0 +1,25 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "title": "call.recording.uploaded",
+  "Description": "This event is produced if a call recording has been uploaded to the cloud.",
+
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "service": { "type": "string" }
+      }
+    }
+  },
+
+  "allOf": [
+    { "$ref": "../../base.json" },
+    {
+      "type": "object",
+      "properties": {
+        "payload": { "$ref": "#/definitions/payload" }
+      },
+      "required": ["payload"]
+    }
+  ]
+}
