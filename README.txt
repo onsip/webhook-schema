@@ -29,11 +29,13 @@ Content-Type: application/json
   "id": "1234",
   "streamId": "abcd",
   "subscriptionId": "5678abcd",
+  "version": "1.0",
   "type": "call.dialog.answered",
   "payload": {
     "requestUri": "bob@foo.onsip.com",
     "uri": "alice@foo.onsip.com"
-  }
+  },
+  "createdAt": "2017-07-05T20:47:26+00:00"
 }
 
 /*
@@ -51,6 +53,7 @@ Content-Type: application/json
  * interaction on the OnSIP platform (from our end, the "OnSIP UID" aka OUID)
  * subscriptionId: uniquely identifies a subscription by the customer to a
  * set of events. This ID is also unique across versions of the webhook events.
+ * version: api version
  * type: identifies the type of event, and what to expect in a given payload
  * payload (optional): data associated with the event notification
  */
@@ -83,7 +86,7 @@ app.queue.recording.uploaded
  * Each "type" will have to specify a set of fields that are required in
  * a corresponding "payload." That requirement is set by defining a schema
  * for each event. A schema for each event type will need to live at a location
- * accessible to the developer. Whether
+ * accessible to the developer.
  *
  * We're likely going to want to write human readable web docs that spell
  * out the fields in each event, but we don't necessarily have to do that.
@@ -95,6 +98,18 @@ app.queue.recording.uploaded
 
 /* Not discussed, but of importance:
  * - TTLs on subscriptions, and different options for how to approach it
+ */
+
+
+/* Testing
+ *
+ * We do testing in the test/ directory. I strongly recommend that we
+ * institue testing for these schemas, as we won't actually be writing
+ * any production code ourselves against the schemas, they are for
+ * external consumption only. As such, we need a way to validate them.
+ * Also, it's super easy.
+ *
+ *  npm test
  */
 
 

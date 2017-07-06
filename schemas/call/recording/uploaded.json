@@ -8,12 +8,13 @@
       "type": "object",
       "properties": {
         "service": { "type": "string" }
-      }
+      },
+      "required": ["service"]
     }
   },
 
   "allOf": [
-    { "$ref": "../../base.json" },
+    { "$ref": "/base" },
     {
       "type": "object",
       "properties": {

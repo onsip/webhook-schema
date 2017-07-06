@@ -1,29 +1,49 @@
 #!/usr/bin/env node
 
 var Validator = require('jsonschema').Validator;
+var baseSchema = require("./schemas/base.json");
 
-var initialSchema = require("./schemas/1.0/call/dialog/answered.json");
-var v = new Validator();
-v.addSchema(initialSchema, "");
+function testAnswered() {
+  var eventSchema = require("./schemas/call/dialog/answered.json");
+  var v = new Validator();
 
-while (v.unresolvedRefs.length) {
-  var nextSchema = v.unresolvedRefs.shift();
-  console.log('nextSchema=', nextSchema);
+  var instance = {
+    "id": "1234",
+    "streamId": "abcd",
+    "subscriptionId": "5678abcd",
+    "type": "call.dialog.answered",
+    "payload": {
+      "requestUri": "bob@foo.onsip.com",
+      "uri": "alice@foo.onsip.com"
+    },
+    "createdAt": "2017-07-05T20:47:26+00:00"
+  };
+
+
+  v.addSchema(baseSchema);
+  console.log(v.validate(instance, eventSchema));
 }
 
-process.exit(0);
+function testProduced() {
+  var eventSchema = require("./schemas/call/recording/uploaded.json");
+  var v = new Validator();
 
-var instance = {
-  "id": "1234",
-  "streamId": "abcd",
-  "subscriptionId": "5678abcd",
-  "type": "call.dialog.answered",
-  "payload": {
-    "requestUri": "bob@foo.onsip.com",
-    "uri": "alice@foo.onsip.com"
-  },
-  "createdAt": "2017-07-05T20:47:26+00:00"
-};
+  var instance = {
+    "id": "1234",
+    "streamId": "abcd",
+    "subscriptionId": "5678abcd",
+    "type": "call.recording.uploaded",
+    "payload": {
+      "service": "aws",
+      "bucket": "bogus"
+    },
+    "createdAt": "2017-07-05T20:47:26+00:00"
+  };
 
 
-console.log(v.validate(instance, schema));
+  v.addSchema(baseSchema);
+  console.log(v.validate(instance, eventSchema));
+}
+
+testAnswered();
+testProduced();

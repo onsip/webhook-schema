@@ -1,0 +1,20 @@
+{
+  "name": "webhooks-schemas",
+  "version": "1.0.0",
+  "description": "Webhooks Schemas",
+  "main": "poc.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Max Rothstein",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^3.4.2"
+  },
+  "dependencies": {
+    "jsonschema": "^1.1.1"
+  }
+}

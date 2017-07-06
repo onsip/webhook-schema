@@ -15,7 +15,7 @@
   },
 
   "allOf": [
-    { "$ref": "../../base.json" },
+    { "$ref": "/base" },
     {
       "type": "object",
       "properties": {
