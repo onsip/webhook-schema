@@ -1,5 +1,3 @@
-var assert = require('assert');
-
 var jsonschema = require('jsonschema');
 var baseSchema = require("../schemas/base.json");
 
@@ -31,41 +29,41 @@ describe('call', function() {
       });
 
       it('schema is a valid schema', function() {
-        assert.doesNotThrow(
-          () => { v.validate({}, eventSchema) },
-          jsonschema.SchemaError
-        );
+        function emptyValidate() {
+          v.validate({}, eventSchema);
+        }
+        expect(emptyValidate).not.toThrowError(jsonschema.SchemaError);
       });
 
       it('instance should match schema exactly', function() {
         var result = v.validate(instance, eventSchema);
-        assert.equal(result.errors.length, 0);
+        expect(result.errors.length).toBe(0);
       });
 
       it('instance should pass validation, has extra field', function() {
         instance["extra"] = "gravy!";
         var result = v.validate(instance, eventSchema);
-        assert.equal(result.errors.length, 0);
+        expect(result.errors.length).toBe(0);
       });
 
       it('instance should pass validation, has extra payload field', function() {
         instance["payload"]["extra"] = "gravy!";
         var result = v.validate(instance, eventSchema);
-        assert.equal(result.errors.length, 0);
+        expect(result.errors.length).toBe(0);
       });
 
       [ "id", "streamId", "subscriptionId", "type", "payload", "createdAt"].forEach(function(key) {
         it('instance should fail validation, missing ' + key, function() {
           delete instance[key];
           var result = v.validate(instance, eventSchema);
-          assert.ok(result.errors.length > 0);
+          expect(result.errors.length > 0).toBeTruthy();
         });
       });
 
       it('instance should fail validation, missing payload field', function() {
         delete instance["payload"]["uri"];
         var result = v.validate(instance, eventSchema);
-        assert.ok(result.errors.length > 0);
+        expect(result.errors.length > 0).toBeTruthy();
       });
 
     });
@@ -83,41 +81,41 @@ describe('call', function() {
       });
 
       it('schema is a valid schema', function() {
-        assert.doesNotThrow(
-          () => { v.validate({}, eventSchema) },
-          jsonschema.SchemaError
-        );
+        function emptyValidate() {
+          v.validate({}, eventSchema);
+        }
+        expect(emptyValidate).not.toThrowError(jsonschema.SchemaError);
       });
 
       it('instance should match schema exactly', function() {
         var result = v.validate(instance, eventSchema);
-        assert.equal(result.errors.length, 0);
+        expect(result.errors.length).toBe(0);
       });
 
       it('instance should pass validation, has extra field', function() {
         instance["extra"] = "gravy!";
         var result = v.validate(instance, eventSchema);
-        assert.equal(result.errors.length, 0);
+        expect(result.errors.length).toBe(0);
       });
 
       it('instance should pass validation, has extra payload field', function() {
         instance["payload"]["extra"] = "gravy!";
         var result = v.validate(instance, eventSchema);
-        assert.equal(result.errors.length, 0);
+        expect(result.errors.length).toBe(0);
       });
 
       [ "id", "streamId", "subscriptionId", "type", "payload", "createdAt"].forEach(function(key) {
         it('instance should fail validation, missing ' + key, function() {
           delete instance[key];
           var result = v.validate(instance, eventSchema);
-          assert.ok(result.errors.length > 0);
+          expect(result.errors.length > 0).toBeTruthy();
         });
       });
 
       it('instance should fail validation, missing payload field', function() {
         delete instance["payload"]["service"];
         var result = v.validate(instance, eventSchema);
-        assert.ok(result.errors.length > 0);
+        expect(result.errors.length > 0).toBeTruthy();
       });
 
     });
