@@ -1,0 +1,28 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "title": "call.dialog.confirmed",
+  "Description": "This event is produced if a call is answered.",
+
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "callId": { "type": "string" },
+        "fromUri": { "type": "string" },
+        "toUri": { "type": "string" },
+      },
+      "required": ["callId", "fromUri", "toUri"]
+    }
+  },
+
+  "allOf": [
+    { "$ref": "/base" },
+    {
+      "type": "object",
+      "properties": {
+        "payload": { "$ref": "#/definitions/payload" }
+      },
+      "required": ["payload"]
+    }
+  ]
+}

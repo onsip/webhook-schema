@@ -1,102 +1,43 @@
 # webhook-schema
-## Subscription:
-Request:
-restapi?WebhookSubscriptionAdd
-&version="1.0"
-&targetUri="http://www.example.com/webhook"
-&contentType="json"
+This documentation is best understood by first reading through the developer guide to the OnSIP Webhooks service. Please contact us at [developer@onsip.com](mailto:developer@onsip.com) for the guide (it's currently in the works, and will be available publicly soon).
 
-* Note: default to version 1.0
+This repository contains JSON Schemas to which each Webhook event conforms. These schemas are intended for developers to use to validate the data that they receive in the events. If you are unfamiliar with JSON Schema, you can refer to [json-schema.org](json-schema.org).
 
-Response (written in JSON for convenience):
+We also provide coding examples in JavaScript and Python, using their respective JSON Schema libraries.
+
+## Generic Event
+Below is the boilerplate for a generic event. It would pass validation on base.json.
+```json
 {
-  "version": "1.0",
-  "targetUri": "http://www.example.com/webhook",
-  "contentType": "application/json",
-  "subscriptionId": "5678abcd"
+    "id": "189004747f808d1fd2c4b848480fa270",
+    "streamId": "1cd4606b-4c84-45b2-80f8-9318e7aea112",
+    "subscriptionId": "300",
+    "type": "generic",
+    "createdAt": "2017-09-11T21:10:58.735641Z"
 }
+```
+## Understanding `type`
+Each webhook event produced by our system contains a `type` field. The types are named hierarchically using the dot operator. This provides a convenient way to supply a set of filters when subscribing to a set of events. The \* matches any word, the \# matches any word or dot. For example:
+```
+#
+call.#
+call.dialog.*
+```
 
+The types also map directly to the hierarchical folder structure used for storing the schemas associated with the types in this repository. For example, the `call.dialog.confirmed` schema lives at `schemas/call/dialog/confirmed.json`.
 
-## Proposed packet structure discussion
-// Example outgoing HTTP request:
-POST /webhook HTTP/1.1
-Host: www.example.com
-Content-Type: application/json
-{
-  "id": "1234",
-  "streamId": "abcd",
-  "subscriptionId": "5678abcd",
-  "version": "1.0",
-  "type": "call.dialog.answered",
-  "payload": {
-    "requestUri": "bob@foo.onsip.com",
-    "uri": "alice@foo.onsip.com"
-  },
-  "createdAt": "2017-07-05T20:47:26+00:00"
-}
+Below is the list of all the currently supported types:
+* call.dialog.requested
+* call.dialog.confirmed
+* call.dialog.terminated
+* call.dialog.failed
+* call.recording.uploaded
 
+It is important to note that the schema does not care about the content of the values in a JSON object that it is validating, it only cares about the _types_ of the values. Schemas are for validating structure and type. It is up to the user application to parse the `type` field and identify which schema to validate against.
 
-The schema to validate the above request can be found publically at:
-  https://www.developer.onsip.com/webhooks/schemas/1.0/call/dialog/answered.json
-
-OR through the API:
-  restapi?WebhooksSchemaRead&version=1.0&type=call.dialog.answered
-
-id: uniquely identifies this event
-streamId: uniquely identifies the set of events which constitute an
-interaction on the OnSIP platform (from our end, the "OnSIP UID" aka OUID)
-subscriptionId: uniquely identifies a subscription by the customer to a
-set of events. This ID is also unique across versions of the webhook events.
-version: api version
-type: identifies the type of event, and what to expect in a given payload
-payload (optional): data associated with the event notification
-
-
-## "type" naming convention
-
-The names will be defined hierarchically using the "." operator. This
-provides a convenient way to supply a set of filters when subscribing
-to a set of events.
-  Example filters: call.dialog.\*, \# (everything)
-Also, it makes documenting and understanding them easier.
-
-call.dialog.incoming
-call.dialog.answered
-call.dialog.transferred
-call.dialog.failed
-call.dialog.end
-call.recording.complete
-call.recording.uploaded
-app.vm.received
-app.vm.deleted
-app.queue.recording.complete
-app.queue.recording.uploaded
-
-
-## "payload" specification
-
-Each "type" will have to specify a set of fields that are required in
-a corresponding "payload." That requirement is set by defining a schema
-for each event. A schema for each event type will need to live at a location
-accessible to the developer.
-
-We're likely going to want to write human readable web docs that spell
-out the fields in each event, but we don't necessarily have to do that.
-Developers can figure it out. Also, there are potentially tools to help
-automate that.
-
-Not discussed, but of importance:
-- TTLs on subscriptions, and different options for how to approach it
-
+## Events with a `payload`
+All events will contain at a minimum the fields specified by the generic event above. Events can optionally include a "payload" field, which is a nested object. The expected fields of the payload are defined in the schema for the corresponding type.
 
 ## Testing
-
-We do testing in the test/ directory. I strongly recommend that we
-institue testing for these schemas, as we won't actually be writing
-any production code ourselves against the schemas, they are for
-external consumption only. As such, we need a way to validate them.
-Also, it's super easy.
-
- npm test
-
-
+To test that a schema works as intended:
+```npm test```

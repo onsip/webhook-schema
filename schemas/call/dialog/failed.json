@@ -1,16 +1,17 @@
 {
   "schema": "http://json-schema.org/draft-04/schema#",
-  "title": "call.dialog.answered",
+  "title": "call.dialog.failed",
   "Description": "This event is produced if a call is answered.",
 
   "definitions": {
     "payload": {
       "type": "object",
       "properties": {
-        "requestUri": { "type": "string" },
-        "uri": { "type": "string" }
+        "callId": { "type": "string" },
+        "fromUri": { "type": "string" },
+        "toUri": { "type": "string" }
       },
-      "required": ["requestUri", "uri"]
+      "required": ["callId", "fromUri", "toUri"]
     }
   },
 
