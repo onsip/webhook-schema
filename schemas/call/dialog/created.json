@@ -1,7 +1,7 @@
 {
   "schema": "http://json-schema.org/draft-04/schema#",
-  "title": "call.dialog.confirmed",
-  "Description": "This event is produced if a call is answered.",
+  "title": "call.dialog.created",
+  "Description": "This event is produced if a call is initiated.",
 
   "definitions": {
     "payload": {

@@ -1,7 +1,7 @@
 {
   "schema": "http://json-schema.org/draft-04/schema#",
-  "title": "call.dialog.confirmed",
-  "Description": "This event is produced if a call is answered.",
+  "title": "call.dialog.referred",
+  "Description": "This event is produced if a call is referred (ie transferred).",
 
   "definitions": {
     "payload": {
@@ -26,3 +26,4 @@
     }
   ]
 }
+
