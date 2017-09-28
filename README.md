@@ -29,6 +29,7 @@ The types also map directly to the hierarchical folder structure used for storin
 Below is the list of all the currently supported types:
 * call.dialog.requested
 * call.dialog.confirmed
+* call.dialog.referred
 * call.dialog.terminated
 * call.dialog.failed
 * call.recording.uploaded
