@@ -1,0 +1,28 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "title": "app.attendant-menu.abandoned",
+  "description": "The user hung up before being transferred.",
+
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "callId": { "type": "string" },
+        "fromUri": { "type": "string" },
+        "toUri": { "type": "string" }
+      },
+      "required": ["fromUri", "toUri"]
+    }
+  },
+
+  "allOf": [
+    { "$ref": "/base" },
+    {
+      "type": "object",
+      "properties": {
+        "payload": { "$ref": "#/definitions/payload" }
+      },
+      "required": ["payload"]
+    }
+  ]
+}

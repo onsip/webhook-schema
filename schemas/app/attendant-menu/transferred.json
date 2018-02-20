@@ -1,0 +1,30 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "title": "app.attendant-menu.transferred",
+  "Description": "A user is successfully transferred to the sip-address associated with an option, or to the extension. (Note: This also occurs when the user is transferred to another Attendant Menu.)",
+
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "entry": { "type": "string" },
+        "callId": { "type": "string" },
+        "fromUri": { "type": "string" },
+        "toUri": { "type": "string" },
+        "referTo": { "type": "string" }
+      },
+      "required": ["entry", "fromUri", "toUri", "referTo"]
+    }
+  },
+
+  "allOf": [
+    { "$ref": "/base" },
+    {
+      "type": "object",
+      "properties": {
+        "payload": { "$ref": "#/definitions/payload" }
+      },
+      "required": ["payload"]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "title": "app.attendant-menu.started",
+  "description": "The attendant menu started and a recording is played.",
+
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "callId": { "type": "string" },
+        "fromUri": { "type": "string" },
+        "toUri": { "type": "string" }
+      },
+      "required": ["fromUri", "toUri"]
+    }
+  },
+
+  "allOf": [
+    { "$ref": "/base" },
+    {
+      "type": "object",
+      "properties": {
+        "payload": { "$ref": "#/definitions/payload" }
+      },
+      "required": ["payload"]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "title": "app.attendant-menu.invalid-dtmf",
+  "description": "The DTMF tones entered by the user map to neither an extension nor a preset option.",
+
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "entry": { "type": "string" },
+        "callId": { "type": "string" },
+        "fromUri": { "type": "string" },
+        "toUri": { "type": "string" }
+      },
+      "required": ["entry", "fromUri", "toUri"]
+    }
+  },
+
+  "allOf": [
+    { "$ref": "/base" },
+    {
+      "type": "object",
+      "properties": {
+        "payload": { "$ref": "#/definitions/payload" }
+      },
+      "required": ["payload"]
+    }
+  ]
+}
