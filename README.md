@@ -1,5 +1,5 @@
 # webhook-schema
-This documentation is best understood by first reading through the developer guide to the OnSIP Webhooks service. Please contact us at [developer@onsip.com](mailto:developer@onsip.com) for the guide (it's currently in the works, and will be available publicly soon).
+This documentation is best understood by first reading through the developer guide to the OnSIP Webhooks service, which can be found [here](https://developer.onsip.com/docs/guides/webhooks). If you have any questions, feel free to contact us at [developer@onsip.com](mailto:developer@onsip.com).
 
 This repository contains JSON Schemas to which each Webhook event conforms. These schemas are intended for developers to use to validate the data that they receive in the events. If you are unfamiliar with JSON Schema, you can refer to [json-schema.org](json-schema.org).
 
@@ -33,6 +33,10 @@ Below is the list of all the currently supported types:
 * call.dialog.terminated
 * call.dialog.failed
 * call.recording.uploaded
+* app.attendant-menu.started
+* app.attendant-menu.transferred
+* app.attendant-menu.invalid-dtmf
+* app.attendant-menu.abandoned
 
 It is important to note that the schema does not care about the content of the values in a JSON object that it is validating, it only cares about the _types_ of the values. Schemas are for validating structure and type. It is up to the user application to parse the `type` field and identify which schema to validate against.
 
